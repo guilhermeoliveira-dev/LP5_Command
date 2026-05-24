@@ -1,7 +1,7 @@
 package org.example.db.query;
 
-import org.example.db.conection.IDatabaseConnection;
-import org.example.db.exception.IllegalActionException;
+import org.example.db.conection.IDatabase;
+import org.example.exception.IllegalActionException;
 import org.example.log.ILogger;
 
 import java.util.ArrayList;
@@ -14,7 +14,7 @@ public class InsertionQuery extends Query{
     private final List<List<String>> values;
 
 
-    InsertionQuery(ILogger logger, IDatabaseConnection db, String tableName, List<String> columns, List<List<String>> values) {
+    InsertionQuery(ILogger logger, IDatabase db, String tableName, List<String> columns, List<List<String>> values) {
         super(logger, db);
         this.tableName = tableName;
         this.columns = columns;

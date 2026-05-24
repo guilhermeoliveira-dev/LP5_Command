@@ -1,6 +1,6 @@
 package org.example.db.query;
 
-import org.example.db.conection.IDatabaseConnection;
+import org.example.db.conection.IDatabase;
 import org.example.log.ILogger;
 
 import java.util.ArrayList;
@@ -9,7 +9,7 @@ import java.util.List;
 public class InsertionQueryBuilder {
 
     private ILogger logger;
-    private IDatabaseConnection db;
+    private IDatabase db;
 
     private String tableName;
     private List<String> columns;
@@ -58,7 +58,7 @@ public class InsertionQueryBuilder {
         return this;
     }
 
-    public InsertionQueryBuilder setDb(IDatabaseConnection db) {
+    public InsertionQueryBuilder setDb(IDatabase db) {
         this.db = db;
         return this;
     }
