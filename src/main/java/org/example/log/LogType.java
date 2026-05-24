@@ -1,7 +1,6 @@
 package org.example.log;
 
 public enum LogType {
-    DB_QUERY("DB"),
     SQL("SQL"),
     WARNING("WARN"),
     ERROR("ERROR"),

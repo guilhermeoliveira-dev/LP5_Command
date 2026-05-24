@@ -8,7 +8,7 @@ public class PrintLogger implements ILogger{
         return instance;
     }
 
-    private PrintLogger(){}
+    protected PrintLogger(){}
 
     @Override
     public void log(LogType type, String text) {
