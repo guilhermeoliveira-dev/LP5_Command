@@ -1,20 +1,21 @@
-package org.example.db.query;
+package org.example.db.query.insert;
 
-import org.example.db.conection.IDatabaseConnection;
-import org.example.db.exception.IllegalActionException;
+import org.example.db.conection.IDatabase;
+import org.example.db.query.Query;
+import org.example.exception.IllegalActionException;
 import org.example.log.ILogger;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class InsertionQuery extends Query{
+public class InsertionQuery extends Query {
 
     private final String tableName;
     private final List<String> columns;
     private final List<List<String>> values;
 
 
-    InsertionQuery(ILogger logger, IDatabaseConnection db, String tableName, List<String> columns, List<List<String>> values) {
+    InsertionQuery(ILogger logger, IDatabase db, String tableName, List<String> columns, List<List<String>> values) {
         super(logger, db);
         this.tableName = tableName;
         this.columns = columns;
@@ -36,14 +37,14 @@ public class InsertionQuery extends Query{
 
         query.append("INSERT INTO ").append(tableName).append(" (");
         query.append(String.join(", ", columns));
-        query.append(")\n");
+        query.append(") ");
 
-        query.append("VALUES\n");
+        query.append("VALUES ");
         List<String> lines = new ArrayList<>();
         for(List<String> line: values){
             lines.add("("+String.join(", ", line)+")");
         }
-        query.append(String.join(",\n", lines));
+        query.append(String.join(", ", lines));
         query.append(";");
 
         return query.toString();
@@ -64,7 +65,7 @@ public class InsertionQuery extends Query{
 
         StringBuilder query = new StringBuilder();
 
-        query.append("DELETE FROM ").append(tableName).append("\n");
+        query.append("DELETE FROM ").append(tableName);
         query.append("WHERE id IN (");
         query.append(String.join(", ", result.getGeneratedIds()));
         query.append(");");

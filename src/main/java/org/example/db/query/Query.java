@@ -1,16 +1,16 @@
 package org.example.db.query;
 
-import org.example.db.conection.IDatabaseConnection;
+import org.example.db.conection.IDatabase;
 import org.example.log.ILogger;
 import org.example.log.LogType;
 
 public abstract class Query implements ICommand{
 
     private final ILogger logger;
-    private final IDatabaseConnection db;
+    private final IDatabase db;
     protected QueryResultDTO result;
 
-    public Query(ILogger logger, IDatabaseConnection db) {
+    public Query(ILogger logger, IDatabase db) {
         this.logger = logger;
         this.db = db;
     }
@@ -31,18 +31,18 @@ public abstract class Query implements ICommand{
         }
 
         try{
-            logger.log(LogType.DB_QUERY, "Beginning transaction:");
+            logger.log(LogType.SYSTEM, "Beginning transaction:");
             db.process("BEGIN TRANSACTION;");
 
-            logger.log(LogType.DB_QUERY, "Executing query:");
+            logger.log(LogType.SYSTEM, "Executing query:");
             result = db.process(query);
 
-            logger.log(LogType.DB_QUERY, "Commiting transaction:");
+            logger.log(LogType.SYSTEM, "Commiting transaction:");
             db.process("COMMIT TRANSACTION;");
 
         } catch(Exception e){
             logger.log(LogType.ERROR, e.getMessage());
-            logger.log(LogType.DB_QUERY, "Rolling back transaction:");
+            logger.log(LogType.SYSTEM, "Rolling back transaction:");
             db.process("ROLLBACK TRANSACTION;");
         }
 
@@ -62,19 +62,19 @@ public abstract class Query implements ICommand{
         }
 
         try{
-            logger.log(LogType.DB_QUERY, "Beginning undo transaction:");
+            logger.log(LogType.SYSTEM, "Beginning undo transaction:");
             db.process("BEGIN TRANSACTION;");
 
-            logger.log(LogType.DB_QUERY, "Executing query:");
+            logger.log(LogType.SYSTEM, "Executing query:");
             result = db.process(query);
 
-            logger.log(LogType.DB_QUERY, "Commiting undo transaction:");
+            logger.log(LogType.SYSTEM, "Commiting undo transaction:");
             db.process("COMMIT TRANSACTION;");
 
         } catch(Exception e){
             logger.log(LogType.ERROR, e.getMessage());
 
-            logger.log(LogType.DB_QUERY, "Rolling undo back transaction:");
+            logger.log(LogType.SYSTEM, "Rolling undo back transaction:");
             db.process("ROLLBACK TRANSACTION;");
         }
 
