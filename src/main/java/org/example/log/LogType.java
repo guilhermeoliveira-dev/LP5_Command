@@ -2,9 +2,10 @@ package org.example.log;
 
 public enum LogType {
     SQL("SQL"),
-    WARNING("WARN"),
+    WARNING("WARNING"),
     ERROR("ERROR"),
-    SYSTEM("SYS");
+    EXCEPTION("EXCEPTION"),
+    SYSTEM("SYSTEM");
 
     private final String label;
 
