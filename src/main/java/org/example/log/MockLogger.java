@@ -1,17 +1,25 @@
 package org.example.log;
 
-public class MockLogger implements ILogger{
+import java.util.ArrayList;
+import java.util.List;
 
-    private static final ILogger instance = new MockLogger();
+public class MockLogger implements ILogger {
 
-    public static ILogger get(){
-        return instance;
-    }
-
-    private MockLogger(){}
+    private final List<String> logs = new ArrayList<>();
 
     @Override
-    public void log(String text) {
-        System.out.println(text);
+    public void log(LogType type, String text) {
+        String formatedLog = logFormat(type, text);
+        logs.add(formatedLog);
+        System.out.println(formatedLog);
+    }
+
+    public boolean containsLog(String text){
+        for(String log : logs){
+            if(log.contains(text)){
+                return true;
+            }
+        }
+        return false;
     }
 }
