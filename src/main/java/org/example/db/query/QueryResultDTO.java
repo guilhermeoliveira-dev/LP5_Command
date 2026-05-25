@@ -1,5 +1,6 @@
 package org.example.db.query;
 
+import java.util.Collections;
 import java.util.List;
 
 public class QueryResultDTO{
@@ -10,6 +11,13 @@ public class QueryResultDTO{
 
     public QueryResultDTO(){
 
+    }
+
+    public QueryResultDTO(QueryResultDTO result) {
+        this.success = result.success;
+        this.rowsAffected = result.getRowsAffected();
+        this.resultSet = result.getResultSet();
+        this.generatedIds = result.generatedIds;
     }
 
     public boolean isSuccess() {
@@ -31,7 +39,7 @@ public class QueryResultDTO{
     }
 
     public List<String> getGeneratedIds() {
-        return generatedIds;
+        return Collections.unmodifiableList(this.generatedIds);
     }
 
     public QueryResultDTO setGeneratedIds(List<String> generatedIds) {
@@ -40,11 +48,13 @@ public class QueryResultDTO{
     }
 
     public List<List<String>> getResultSet() {
-        return resultSet;
+        return Collections.unmodifiableList(this.resultSet);
     }
 
     public QueryResultDTO setResultSet(List<List<String>> resultSet) {
         this.resultSet = resultSet;
         return this;
     }
+
+
 }

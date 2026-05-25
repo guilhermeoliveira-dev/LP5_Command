@@ -60,13 +60,13 @@ public class InsertionQuery extends Query {
     protected String undoQuery() {
 
         if(result == null){
-            throw new IllegalActionException("Cannot undo a query that was not executed");
+            throw new IllegalActionException(logger, "Cannot undo a query that was not executed");
         }
 
         StringBuilder query = new StringBuilder();
 
         query.append("DELETE FROM ").append(tableName);
-        query.append("WHERE id IN (");
+        query.append(" WHERE id IN (");
         query.append(String.join(", ", result.getGeneratedIds()));
         query.append(");");
 

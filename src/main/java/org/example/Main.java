@@ -2,8 +2,10 @@ package org.example;
 
 import org.example.db.conection.IDatabase;
 import org.example.db.conection.mock.MockInsertDatabase;
+import org.example.db.conection.mock.MockUpdateDatabase;
 import org.example.db.query.insert.InsertionQueryBuilder;
 import org.example.db.query.Query;
+import org.example.db.query.update.UpdateQueryBuilder;
 import org.example.log.ILogger;
 import org.example.log.PrintLogger;
 import org.example.model.User;
@@ -24,10 +26,10 @@ public class Main {
         User user1 = new User("John", 1000, LocalDate.of(2026, 1, 1));
         User user2 = new User("Mary", 1200, LocalDate.of(2026, 2, 1));
 
-        Query query;
+        Query insertQuery;
 
         try{
-            query = new InsertionQueryBuilder()
+            insertQuery = new InsertionQueryBuilder()
                     .setDb(db)
                     .setLogger(log)
                     .setTableName("users")
@@ -42,9 +44,30 @@ public class Main {
             return;
         }
 
-        query.execute();
+        System.out.println();
 
-        query.cancel();
+        insertQuery.execute();
+
+        System.out.println();
+
+//        insertQuery.cancel();
+
+        db = new MockUpdateDatabase();
+
+        Query updateQuery = new UpdateQueryBuilder()
+                .setDb(db)
+                .setLogger(log)
+                .setTableName("users")
+                .setColumns("balance")
+                .setValues("3000")
+                .setId(insertQuery.getQueryResults().getGeneratedIds().get(0))
+                .build();
+
+        updateQuery.execute();
+
+        System.out.println();
+
+        updateQuery.cancel();
 
     }
 }

@@ -1,25 +1,22 @@
-package org.example.db.query.insert;
+package org.example.db.query.update;
 
 import org.example.db.conection.IDatabase;
 import org.example.log.ILogger;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class InsertionQueryBuilder {
+public class UpdateQueryBuilder {
 
     private ILogger logger;
     private IDatabase db;
 
     private String tableName;
     private List<String> columns;
-    private List<List<String>> values;
+    private List<String> values;
+    private String id;
 
-    public InsertionQueryBuilder(){
 
-    }
-
-    public InsertionQuery build(){
+    public UpdateQuery build(){
         if(logger == null){
             throw new IllegalArgumentException("Empty Logger");
         }
@@ -35,42 +32,49 @@ public class InsertionQueryBuilder {
         if(values == null){
             throw new IllegalArgumentException("Empty Values");
         }
+        if(id == null){
+            throw new IllegalArgumentException("Empty Id for selection");
+        }
 
-
-        return new InsertionQuery(logger, db, tableName, columns, values);
+        return new UpdateQuery(logger, db, tableName, columns, values, id);
 
     }
 
-    public InsertionQueryBuilder setLogger(ILogger logger) {
+    public UpdateQueryBuilder setLogger(ILogger logger) {
         this.logger = logger;
         return this;
     }
 
-    public InsertionQueryBuilder setTableName(String tableName) {
+    public UpdateQueryBuilder setTableName(String tableName) {
         this.tableName = tableName;
         return this;
     }
 
-    public InsertionQueryBuilder setColumns(List<String> columns) {
+    public UpdateQueryBuilder setColumns(List<String> columns) {
         this.columns = columns;
         return this;
     }
 
-    public InsertionQueryBuilder setColumns(String... columns) {
+    public UpdateQueryBuilder setColumns(String... columns) {
         return setColumns(List.of(columns));
     }
 
-    public InsertionQueryBuilder setValues(List<List<String>> values) {
+    public UpdateQueryBuilder setValues(List<String> values) {
         this.values = values;
         return this;
     }
 
-//    public InsertionQueryBuilder setValues(List<String>... values) {
-//        return setValues(List.of(values));
-//    }
+    public UpdateQueryBuilder setValues(String... values) {
+        return setValues(List.of(values));
+    }
 
-    public InsertionQueryBuilder setDb(IDatabase db) {
+    public UpdateQueryBuilder setDb(IDatabase db) {
         this.db = db;
+        return this;
+    }
+
+    public UpdateQueryBuilder setId(String id) {
+        this.id = id;
         return this;
     }
 }

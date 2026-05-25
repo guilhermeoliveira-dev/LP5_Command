@@ -6,8 +6,8 @@ import org.example.log.LogType;
 
 public abstract class Query implements ICommand{
 
-    private final ILogger logger;
-    private final IDatabase db;
+    protected final ILogger logger;
+    protected final IDatabase db;
     protected QueryResultDTO result;
 
     public Query(ILogger logger, IDatabase db) {
@@ -17,6 +17,10 @@ public abstract class Query implements ICommand{
 
     protected abstract String generateQuery();
     protected abstract String undoQuery();
+
+    protected void savePreviousState() {
+
+    }
 
     @Override
     public void execute() {
@@ -33,6 +37,8 @@ public abstract class Query implements ICommand{
         try{
             logger.log(LogType.SYSTEM, "Beginning transaction:");
             db.process("BEGIN TRANSACTION;");
+
+            savePreviousState();
 
             logger.log(LogType.SYSTEM, "Executing query:");
             result = db.process(query);
@@ -78,6 +84,10 @@ public abstract class Query implements ICommand{
             db.process("ROLLBACK TRANSACTION;");
         }
 
+    }
+
+    public QueryResultDTO getQueryResults(){
+        return new QueryResultDTO(result);
     }
 
 }
