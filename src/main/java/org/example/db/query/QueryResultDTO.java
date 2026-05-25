@@ -1,13 +1,14 @@
 package org.example.db.query;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class QueryResultDTO{
     private boolean success;
     private int rowsAffected;
-    private List<String> generatedIds;
-    private List<List<String>> resultSet;
+    private List<String> generatedIds = new ArrayList<>();
+    private List<List<String>> resultSet = new ArrayList<>();
 
     public QueryResultDTO(){
 
@@ -15,9 +16,14 @@ public class QueryResultDTO{
 
     public QueryResultDTO(QueryResultDTO result) {
         this.success = result.success;
-        this.rowsAffected = result.getRowsAffected();
-        this.resultSet = result.getResultSet();
         this.generatedIds = result.generatedIds;
+        if (result.getGeneratedIds() != null) {
+            this.generatedIds = new ArrayList<>(result.getGeneratedIds());
+        }
+        if (result.getResultSet() != null) {
+            this.resultSet = new ArrayList<>(result.getResultSet());
+        }
+        
     }
 
     public boolean isSuccess() {

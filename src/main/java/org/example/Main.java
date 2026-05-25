@@ -1,8 +1,7 @@
 package org.example;
 
 import org.example.db.conection.IDatabase;
-import org.example.db.conection.mock.MockInsertDatabase;
-import org.example.db.conection.mock.MockUpdateDatabase;
+import org.example.db.conection.mock.MockDatabase;
 import org.example.db.query.insert.InsertionQueryBuilder;
 import org.example.db.query.Query;
 import org.example.db.query.update.UpdateQueryBuilder;
@@ -21,7 +20,7 @@ public class Main {
     public static void main(String[] args) {
 
         ILogger log = PrintLogger.get();
-        IDatabase db = new MockInsertDatabase();
+        IDatabase db = new MockDatabase();
 
         User user1 = new User("John", 1000, LocalDate.of(2026, 1, 1));
         User user2 = new User("Mary", 1200, LocalDate.of(2026, 2, 1));
@@ -51,8 +50,6 @@ public class Main {
         System.out.println();
 
 //        insertQuery.cancel();
-
-        db = new MockUpdateDatabase();
 
         Query updateQuery = new UpdateQueryBuilder()
                 .setDb(db)
